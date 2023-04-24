@@ -28,6 +28,8 @@ const Hero = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [selected, setSelected] = useState(false);
+  const [startSale, setStartSale] = useState(" ");
+  const [endSale, setEndSale] = useState(" ");
 
   const selectionRange = {
     startDate,
@@ -69,18 +71,22 @@ const Hero = () => {
                   <div className="absolute z-10 mt-2 shadow rounded left-0 p-4 bg-white flex items-center gap-4 text-sm font-light">
                     <div className="rounded py-1 px-2 border border-gray-200 hover:border-gray-400 transition flex items-center">
                       <input
-                        type="text"
+                        type="number"
                         className="outline-none"
                         placeholder="от"
+                        value={startSale}
+                        onChange={(e) => setStartSale(e.target.value)}
                       />
                       <span>₽</span>
                     </div>
                     <div className="rounded py-1 px-2 border border-gray-200 hover:border-gray-400 transition flex items-center">
                       <input
-                        type="text"
+                        type="number"
                         className="outline-none"
                         placeholder="до"
-                      />
+                        value={endSale}
+                        onChange={(e) => setEndSale(e.target.value)}
+                      />                     
                       <span>₽</span>
                     </div>
                   </div>
@@ -120,7 +126,7 @@ const Hero = () => {
                         value={numberOfGuests}
                         onChange={(e) => setNumberOfGuests(e.target.value)}
                         className="outline-none text-center w-20"
-                        type="text"
+                        type="number"
                       />
                       <button
                         onClick={() => setNumberOfGuests((p) => p + 1)}
@@ -176,9 +182,6 @@ const Hero = () => {
           </div>
         </form>
         <div className="w-[70%] absolute top-[50%] left-[15%] mt-6 flex justify-end">
-          <button className="bg-white text-gray-800 font-semibold py-2 px-6 rounded mr-2 transition hover:text-blue-500">
-            Очистить поля
-          </button>
           <button className="bg-blue-600 font-semibold text-white rounded px-8 py-2 transition hover:bg-blue-700">
             Найти
           </button>
