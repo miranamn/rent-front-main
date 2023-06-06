@@ -12,9 +12,9 @@ const Ad = (props) => {
       <div className="rent-info">
         <div className="rent-about">
           <h2>{props.title}</h2>
-          <p className="text">{props.adress}</p>
-          <p className="cost">От {props.price} ₽</p>
-          <p className="text">Вместимость: {props.apacity} человек</p>
+          <p className="text">{props.address}</p>
+          <p className="cost">От {props.paymentPerHour} ₽</p>
+          <p className="text">Вместимость: {props.capacity} человек</p>
         </div>
         <div className="desc">
           <p>{props.description}</p>
@@ -25,13 +25,13 @@ const Ad = (props) => {
         <div className="image">
           <FaUser></FaUser>
         </div>
-        <p className="name">Риелтор</p>
+        <p className="name">{props.login}</p>
         <p className="par">Документы проверены</p>
         <p className="par">
           <a href="">Посмотреть все объекты</a>
         </p>
         <div className="btns">
-          <button className="btnBlue">+79871680434254</button>
+          <button className="btnBlue">{props.phone}</button>
           <button className="btnWhite">Откликнуться</button>
         </div>
       </div>

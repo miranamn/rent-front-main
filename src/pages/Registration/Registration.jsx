@@ -1,62 +1,95 @@
 import "./Registration.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function Registration() {
-  const [mail, setMail] = useState("");
-  const [password, setPassword] = useState("");
-  const [type, setType] = useState("");
+const Registration = ({create}) => {
+  const[user, setUser] = useState({id: '', mail: '', login: '', password: '', phone: '', type: '' })
 
-  const [login, setLogin] = useState("");
-  const [tel, setTel] = useState("");
+  const addUser = (e) => {
+    var link1 = "http://localhost:8081/landlords";
+    var link2 = "http://localhost:8081/customers";
+    e.preventDefault()
+    setUser({mail: '', login: '', password: '', phone: '', type: ''})
+    if (user.type === "landlord"){
+    fetch(link1, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      mail: user.mail,
+      login: user.login,
+      password: user.password,
+      phone: user.phone
+    })
+  }).then((response) => console.log(response));
+
+  } else {
+    fetch(link2, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        mail: user.mail,
+        login: user.login,
+        password: user.password,
+        phone: user.phone
+      })
+    }).then((response) => console.log(response));
+  }
+  
+}
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!mail.trim() || !password.trim() || !type || !login.trim()) {
+    if (!user.mail.trim() || !user.password.trim() || !user.type || !user.login.trim()) {
       return;
     }
     navigate("/");
   };
 
-  return (
-    <div className="registr">
+  return ( 
+    <div className="registr"> 
       <form className="form" onSubmit={handleSubmit}>
         <h1 className="heading">Регистрация</h1>
         <div className="form-control">
           <input
             type="email"
             placeholder="Почта"
-            value={mail}
-            onChange={(e) => setMail(e.target.value)}
+            value={user.mail}
+            onChange={(e) => setUser({...user, mail: e.target.value})}
           />
         </div>
         <div className="form-control">
           <input
             type="text"
             placeholder="Логин"
-            value={login}
-            onChange={(e) => setLogin(e.target.value)}
+            value={user.login}
+            onChange={(e) => setUser({...user, login: e.target.value})}
           />
         </div>
         <div className="form-control">
           <input
             type="password"
             placeholder="Пароль"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={user.password}
+            onChange={(e) => setUser({...user, password: e.target.value})}
           />
         </div>
         <div className="form-control">
           <input
             type="tel"
             placeholder="Телефон"
-            value={tel}
-            onChange={(e) => setTel(e.target.value)}
+            value={user.phone}
+            onChange={(e) => setUser({...user, phone: e.target.value})}
           />
         </div>
-        <button type="submit" className="btn bg-blue-600">
+        <button onClick={addUser} type="submit" className="btn bg-blue-600">
           Зарегистрироваться
         </button>
         <div className="checkBox">
@@ -66,8 +99,8 @@ function Registration() {
               name="landlord"
               value="landlord"
               id="landlord"
-              checked={type === "landlord"}
-              onChange={(e) => setType(e.target.value)}
+              checked={user.type === "landlord"}
+              onChange={(e) => setUser({...user, type: e.target.value})}
             />
             Арендодатель
           </label>
@@ -77,16 +110,17 @@ function Registration() {
               name="customer"
               value="customer"
               id="customer"
-              checked={type === "customer"}
-              onChange={(e) => setType(e.target.value)}
+              checked={user.type === "customer"}
+              onChange={(e) => setUser({...user, type: e.target.value})}
             />
             Заказчик
           </label>
         </div>
         <Link to="/login">Войти</Link>
-      </form>
-    </div>
+        
+      </form> 
+      </div>   
   );
-}
+};
 
 export default Registration;

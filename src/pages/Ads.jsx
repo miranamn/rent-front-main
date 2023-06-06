@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { RiArrowLeftRightLine } from "react-icons/ri";
 import { FiMap } from "react-icons/fi";
+import axios from 'axios';
 import data from "../data.json";
 import { Filter, Navbar, Ad } from "../components";
 import { useSearchParams } from "react-router-dom";
@@ -10,19 +10,16 @@ const Ads = () => {
   const searchTerm =
     searchParams.get("q") !== null ? searchParams.get("q") : "";
   const [search, setSearch] = useState(searchTerm);
-  const [posts, setPosts] = useState(data);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    if (!searchTerm) {
-      setPosts(data);
-    } else {
-      setPosts(
-        data.filter((item) => {
-          return item.adress.toLowerCase().includes(searchTerm.toLowerCase());
-        })
-      );
-    }
-  }, [searchTerm]);
+   fetchPost()
+  }, []);
+  
+  async function fetchPost(){
+      const response = await axios.get('http://localhost:8081/advertising');
+      setPosts(response.data);
+  }
 
   return (
     <>
@@ -44,13 +41,16 @@ const Ads = () => {
         {posts.map((item, index) => {
           return (
             <Ad
+              login={item.landlord.login}
+              phone={item.landlord.phone}
               title={item.title}
-              adress={item.adress}
-              image={item.image}
+              address={item.address}
+              capacity={item.capacity}
               description={item.description}
-              price={item.price}
-              apacity={item.apacity}
-              period={item.period}
+              paymentPerHour={item.paymentPerHour}
+              rentDate={item.rentDate}
+              maxTerm={item.maxTerm}
+              image="https://cdn-p.cian.site/images/83/569/561/1659653808-4.jpg"
               key={index}
             />
           );

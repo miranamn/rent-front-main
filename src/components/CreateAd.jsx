@@ -3,18 +3,40 @@ import { Fragment, useState } from "react";
 
 export default function MyModal({ isOpen, closeModal }) {
   const [formState, setStateForm] = useState({
+    landlord: 3,
     title: "",
-    adress: "",
-    price: 0,
+    address: "",
+    capacity: 1,
     description: "",
-    apacity: 1,
-    period: 1,
-    data: "",
+    paymentPerHour: 0,
+    rentDate: "",
+    maxTerm: 1,
   });
+
+  const addAD = (e) => {
+    e.preventDefault()
+    fetch("http://localhost:8081/advertising", {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body:JSON.stringify({
+      landlord: {id : formState.landlord},
+      title: formState.title,
+      address: formState.address,
+      capacity: formState.capacity,
+      description: formState.description,
+      paymentPerHour: formState.paymentPerHour,
+      rentDate: formState.rentDate,
+      maxTerm: formState.maxTerm
+    })
+  })
+}
 
   const [errors, setErrors] = useState({
     title: false,
-    adress: false,
+    address: false,
     price: false,
     description: false,
     period: false,
@@ -22,16 +44,12 @@ export default function MyModal({ isOpen, closeModal }) {
     data: false,
   });
 
-  function handleChange(e) {
-    setStateForm({ ...formState, [e.target.name]: e.target.value });
-  }
-  console.log(formState);
 
   function handleSubmit(e) {
     e.preventDefault();
     const tempErrors = {
       title: false,
-      adress: false,
+      address: false,
       price: false,
       description: false,
       period: false,
@@ -159,8 +177,8 @@ export default function MyModal({ isOpen, closeModal }) {
                                   errors.adress && "border-red-300"
                                 }`}
                                 placeholder="Адрес"
-                                value={formState.adress}
-                                onChange={handleChange}
+                                value={formState.address}
+                                onChange={(e) => setStateForm({...formState, address: e.target.value})}
                               />
                             </div>
                             <div className="flex flex-col items-start">
@@ -181,7 +199,7 @@ export default function MyModal({ isOpen, closeModal }) {
                                 }`}
                                 placeholder="Название"
                                 value={formState.title}
-                                onChange={handleChange}
+                                onChange={(e) => setStateForm({...formState, title: e.target.value})}
                               />
                             </div>
                             
@@ -203,8 +221,8 @@ export default function MyModal({ isOpen, closeModal }) {
                                 }`}
                                 placeholder="Вместимость"
                                 min="1"
-                                value={formState.apacity}
-                                onChange={handleChange}
+                                value={formState.capacity}
+                                onChange={(e) => setStateForm({...formState, capacity: e.target.value})}
                               />
                             </div>
                             <div className="flex flex-col items-start">
@@ -224,8 +242,8 @@ export default function MyModal({ isOpen, closeModal }) {
                                   errors.adress && "border-red-300"
                                 }`}
                                 placeholder="Дата аренды"
-                                value={formState.data}
-                                onChange={handleChange}
+                                value={formState.rentDate}
+                                onChange={(e) => setStateForm({...formState, rentDate: e.target.value})}
                               />
                             </div>
                           </div>
@@ -249,8 +267,8 @@ export default function MyModal({ isOpen, closeModal }) {
                                 }`}
                                 placeholder="Оплата"
                                 min="0"
-                                value={formState.price}
-                                onChange={handleChange}
+                                value={formState.paymentPerHour}
+                                onChange={(e) => setStateForm({...formState, paymentPerHour: e.target.value})}
                               />
                             </div>
 
@@ -272,8 +290,8 @@ export default function MyModal({ isOpen, closeModal }) {
                                 }`}
                                 placeholder="Срок аренды в часах"
                                 min="1"
-                                value={formState.period}
-                                onChange={handleChange}
+                                value={formState.maxTerm}
+                                onChange={(e) => setStateForm({...formState, maxTerm: e.target.value})}
                               />
                             </div>
                             <div className="flex flex-col items-start">
@@ -295,12 +313,12 @@ export default function MyModal({ isOpen, closeModal }) {
                                 placeholder="Описание"
                                 style={{ resize: "none" }}
                                 value={formState.description}
-                                onChange={handleChange}
+                                onChange={(e) => setStateForm({...formState, description: e.target.value})}
                               />
                             </div>
                           </div>
                         </div>
-                        <button
+                        <button onClick={addAD}
                           type="submit"
                           className="mt-6 w-3/4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >

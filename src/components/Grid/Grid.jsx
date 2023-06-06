@@ -21,10 +21,6 @@ const Grid = ({ openModal }) => {
           <Link to="/">квартиры-студии</Link>
         </div>
         <div className="item item--img">
-          {/*<img
-            src="https://banketmaster.ru/podborki2016/2018/07/9529232b0c1498b6800d63b741397ccf_thumb.jpg"
-            width="400px"
-  ></img>*/}
         </div>
         <div className="item">
           <h2>Арендовать по количеству гостей</h2>

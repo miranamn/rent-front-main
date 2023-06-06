@@ -23,22 +23,6 @@ const Requests = () => {
           return <Request {...item} key={index} />;
         })}
       </div>
-      {/* <div className="container mx-auto flex flex-col gap-4 mt-4">
-        {posts.map((item, index) => {
-          return (
-            <Ad
-              title={item.title}
-              adress={item.adress}
-              image={item.image}
-              description={item.description}
-              price={item.price}
-              apacity={item.apacity}
-              period={item.period}
-              key={index}
-            />
-          );
-        })}
-      </div> */}
     </>
   );
 };
